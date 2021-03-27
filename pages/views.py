@@ -3,7 +3,8 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from pages.serializers import UserSerializer, GroupSerializer, PageSerializer
 from .models import Page
-
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -22,10 +23,20 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class PageViewSet(viewsets.ModelViewSet):
+class PageViewSet(viewsets.ViewSet):
     """
     API endpoint that allows pages to be viewed or edited.
     """
-    queryset = Page.objects.all()
-    serializer_class = PageSerializer
-    #permission_classes = [permissions.IsAuthenticated]
+    lookup_field = 'name'
+
+    #https://stackoverflow.com/questions/39729388/using-django-rest-framework-to-return-info-by-name
+    def list(self, request):
+        queryset = Page.objects.all()
+        serializer = PageSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
+    def retrieve(self, request, name=None):
+        queryset = Page.objects.all()
+        page = get_object_or_404(queryset, name=name)
+        serializer = PageSerializer(page)
+        return Response(serializer.data)

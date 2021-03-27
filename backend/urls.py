@@ -21,7 +21,8 @@ from pages import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
-router.register(r'pages', views.PageViewSet)
+router.register(r'pages', views.PageViewSet, basename="Page")
+#router.register(r'pages/(?P<name>[a-zA-Z0-9]+)$', views.IndividualPageViewSet, basename="Page")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
