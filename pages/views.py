@@ -35,6 +35,12 @@ class PageViewSet(viewsets.ViewSet):
         serializer = PageSerializer(queryset, many=True)
         return Response(serializer.data)
     
+    def create(self, request):
+        serializer = PageSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
     def retrieve(self, request, name=None):
         queryset = Page.objects.all()
         page = get_object_or_404(queryset, name=name)
