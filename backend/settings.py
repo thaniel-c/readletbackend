@@ -25,13 +25,14 @@ SECRET_KEY = '4x!_y#z2%ruz6d)vljuc7$3aw1g#=*yj8b795)(waxw4(9@us@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['api.nathancoulas.com', '*']
 
 
 # Application definition
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
+    "http://readlet.nathancoulas.com",
 ]
 
 INSTALLED_APPS = [
